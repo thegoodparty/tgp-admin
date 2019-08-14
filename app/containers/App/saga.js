@@ -4,7 +4,11 @@ import { push } from 'connected-react-router';
 import request from 'utils/request';
 import tgpApi from 'api/tgpApi';
 
-import { LOGIN_USER_ACTION, VERIFY_PHONE_ACTION } from './constants';
+import {
+  LOAD_USER_ACTION,
+  LOGIN_USER_ACTION,
+  VERIFY_PHONE_ACTION,
+} from './constants';
 
 import {
   loginActionError,
@@ -12,7 +16,8 @@ import {
   verifyPhoneActionError,
   verifyPhoneActionSuccess,
 } from './actions';
-import { ADMIN_ROLE } from '../../helpers/userHelper';
+import { ADMIN_ROLE, getUser } from '../../helpers/userHelper';
+import { setUserCookie } from '../../helpers/cookieHelper';
 
 function* loginUser(action) {
   try {
@@ -52,6 +57,7 @@ function* verifyPhone(action) {
     const response = yield call(request, api.url, requestOptions);
     console.log(response);
     const { token } = response;
+    setUserCookie(token);
     yield put(verifyPhoneActionSuccess(token));
     yield put(push('dashboard'));
   } catch (err) {
@@ -60,8 +66,20 @@ function* verifyPhone(action) {
   }
 }
 
+function* loadUser(action) {
+  const token = getUser();
+  console.log('from cookie', token);
+  if (token) {
+    yield put(verifyPhoneActionSuccess(token));
+    yield put(push('dashboard'));
+  } else if (action.withRedirect) {
+    yield put(push('login'));
+  }
+}
+
 // Individual exports for testing
 export default function* appSaga() {
   const loginAction = yield takeLatest(LOGIN_USER_ACTION, loginUser); // eslint-disable-line no-unused-vars
   const verifyAction = yield takeLatest(VERIFY_PHONE_ACTION, verifyPhone); // eslint-disable-line no-unused-vars
+  const loadAction = yield takeLatest(LOAD_USER_ACTION, loadUser); // eslint-disable-line no-unused-vars
 }

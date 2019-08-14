@@ -8,6 +8,7 @@ import {
   LOGIN_USER_ACTION,
   LOGIN_USER_ACTION_SUCCESS,
   LOGIN_USER_ACTION_ERROR,
+  LOAD_USER_ACTION,
   RESET_USER_ACTION,
   VERIFY_PHONE_ACTION,
   VERIFY_PHONE_ACTION_SUCCESS,
@@ -35,6 +36,13 @@ export function loginActionError(error) {
   };
 }
 
+export function loadUser(withRedirect = true) {
+  return {
+    type: LOAD_USER_ACTION,
+    withRedirect,
+  };
+}
+
 export function resetUser() {
   return {
     type: RESET_USER_ACTION,
@@ -51,14 +59,14 @@ export function verifyPhoneAction(phone, code) {
 
 export function verifyPhoneActionSuccess(token) {
   return {
-    type: LOGIN_USER_ACTION_SUCCESS,
+    type: VERIFY_PHONE_ACTION_SUCCESS,
     token,
   };
 }
 
 export function verifyPhoneActionError(error) {
   return {
-    type: LOGIN_USER_ACTION_ERROR,
+    type: VERIFY_PHONE_ACTION_ERROR,
     error,
   };
 }

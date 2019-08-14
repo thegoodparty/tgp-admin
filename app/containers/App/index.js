@@ -14,6 +14,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 
 import LoginPage from 'containers/LoginPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import DashboardPage from 'containers/DashboardPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 
@@ -29,6 +30,8 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={LoginPage} />
         <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/dashboard" component={DashboardPage} />
+        <Route exact path="/dashboard/*" component={DashboardPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

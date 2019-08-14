@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -12,10 +12,25 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import Login from 'components/Login';
-import { loginAction, resetUser, verifyPhoneAction } from '../App/actions';
+import {
+  loadUser,
+  loginAction,
+  resetUser,
+  verifyPhoneAction,
+} from '../App/actions';
 import { makeSelectAppPage } from '../App/selectors';
 
-export function LoginPage({ loginUserCallback, resetUserCallback, verifyPhoneCallback, appPage }) {
+export function LoginPage({
+  dispatch,
+  loginUserCallback,
+  resetUserCallback,
+  verifyPhoneCallback,
+  appPage,
+}) {
+  useEffect(() => {
+    dispatch(loadUser(false));
+  }, []);
+
   const childProps = {
     loginUserCallback,
     resetUserCallback,
@@ -35,6 +50,7 @@ export function LoginPage({ loginUserCallback, resetUserCallback, verifyPhoneCal
 }
 
 LoginPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   loginUserCallback: PropTypes.func.isRequired,
   resetUserCallback: PropTypes.func.isRequired,
   verifyPhoneCallback: PropTypes.func.isRequired,

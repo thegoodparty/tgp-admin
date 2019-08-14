@@ -1,3 +1,5 @@
+const DAY = 24 * 60 * 60 * 1000;
+
 export const getCookie = name => {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -13,29 +15,17 @@ export const setCookie = (name, value, days = 2) => {
   let expires = '';
   if (days) {
     const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    date.setTime(date.getTime() + days * DAY);
     expires = `; expires=${date.toUTCString()}`;
   }
   document.cookie = `${name}=${value || ''}${expires}; path=/`;
 };
 
-export const setUserCookie = (
-  id,
-  token,
-  fname,
-  lname,
-  email,
-  avatarUrl = false,
-) => {
+export const setUserCookie = token => {
   setCookie(
-    'rcuser',
+    'tgpuser',
     JSON.stringify({
-      id,
       token,
-      fname,
-      lname,
-      email,
-      avatarUrl,
     }),
   );
 };
