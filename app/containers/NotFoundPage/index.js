@@ -6,14 +6,22 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 
-import messages from './messages';
+import bgImg from 'images/404.gif';
+import styled from 'styled-components';
+
+const BG = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background: red url(${bgImg}) no-repeat center center;
+  background-size: cover;
+`;
 
 export default function NotFound() {
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <Link to="/">
+      <BG />
+    </Link>
   );
 }
