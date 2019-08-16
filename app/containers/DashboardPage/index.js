@@ -23,7 +23,7 @@ import saga from './saga';
 import { loadUser, resetUser } from '../App/actions';
 import { cleanCookies } from '../../helpers/cookieHelper';
 
-export function DashboardPage({ dispatch, signoutCallback }) {
+export function DashboardPage({ dispatch, signoutCallback, location }) {
   useInjectReducer({ key: 'dashboardPage', reducer });
   useInjectSaga({ key: 'dashboardPage', saga });
 
@@ -33,6 +33,7 @@ export function DashboardPage({ dispatch, signoutCallback }) {
 
   const childProps = {
     signoutCallback,
+    location,
   };
 
   return (
@@ -49,15 +50,17 @@ export function DashboardPage({ dispatch, signoutCallback }) {
 DashboardPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   signoutCallback: PropTypes.func.isRequired,
+  location: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   dashboardPage: makeSelectDashboardPage(),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
   return {
     dispatch,
+    location: ownProps.location.pathname,
     signoutCallback: () => {
       cleanCookies();
       dispatch(resetUser());

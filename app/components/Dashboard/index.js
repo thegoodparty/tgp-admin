@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Header from '../Header';
 import LeftPanel from '../LeftPanel';
+import Map from './Map';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,13 +45,27 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Dashboard({ loading, error, signoutCallback }) {
+function Dashboard({ loading, error, signoutCallback, location }) {
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const renderChild = () => {
+    if (location === '/dashboard/reports') {
+      return <div>Reports</div>;
+    }
+    if (location === '/dashboard/pledges') {
+      return <div>Pledges</div>;
+    }
+    if (location === '/dashboard/candidates') {
+      return <div>Candidates</div>;
+    }
+
+    return <Map />;
   };
 
   const classes = useStyles();
@@ -75,7 +90,7 @@ function Dashboard({ loading, error, signoutCallback }) {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          Hi
+          {renderChild()}
         </Container>
       </main>
     </div>
@@ -86,6 +101,7 @@ Dashboard.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.bool,
   signoutCallback: PropTypes.func,
+  location: PropTypes.string,
 };
 
 export default Dashboard;

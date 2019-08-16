@@ -55,20 +55,17 @@ function* verifyPhone(action) {
     const requestOptions = headersOptions(body, api.method);
 
     const response = yield call(request, api.url, requestOptions);
-    console.log(response);
     const { token } = response;
     setUserCookie(token);
     yield put(verifyPhoneActionSuccess(token));
     yield put(push('dashboard'));
   } catch (err) {
-    console.log(err);
     yield put(verifyPhoneActionError(err.message ? err.message : err));
   }
 }
 
 function* loadUser(action) {
   const token = getUser();
-  console.log('from cookie', token);
   if (token) {
     yield put(verifyPhoneActionSuccess(token));
     yield put(push('dashboard'));
