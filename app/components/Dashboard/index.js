@@ -10,6 +10,9 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
+import PledgesPage from 'containers/PledgesPage/Loadable';
+
 import Header from '../Header';
 import LeftPanel from '../LeftPanel';
 import Map from './Map';
@@ -17,6 +20,8 @@ import Map from './Map';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
+    maxWidth: 'auto',
+
   },
   loadingModal: {
     position: 'fixed',
@@ -59,7 +64,7 @@ function Dashboard({ loading, error, signoutCallback, location }) {
       return <div>Reports</div>;
     }
     if (location === '/dashboard/pledges') {
-      return <div>Pledges</div>;
+      return <PledgesPage />;
     }
     if (location === '/dashboard/candidates') {
       return <div>Candidates</div>;
@@ -89,7 +94,7 @@ function Dashboard({ loading, error, signoutCallback, location }) {
       />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth={false} className={classes.container}>
           {renderChild()}
         </Container>
       </main>

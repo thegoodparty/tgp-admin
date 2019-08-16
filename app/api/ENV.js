@@ -1,2 +1,2 @@
-const ENV = 'dev'; // local, dev, qa, prod
+const ENV = 'local'; // local, dev, qa, prod
 export default ENV;

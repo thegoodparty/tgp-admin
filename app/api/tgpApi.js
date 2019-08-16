@@ -14,5 +14,9 @@ const api = {
     url: base + 'entrance/verify-phone',
     method: 'PUT',
   },
+  allUsers: {
+    url: base + 'admin/all-users',
+    method: 'GET',
+  },
 };
 export default api;
