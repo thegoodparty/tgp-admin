@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Dashboard({ loading, error, signoutCallback, location }) {
+function Dashboard({ loading, error, signoutCallback, cdWithMap, location }) {
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -69,7 +69,7 @@ function Dashboard({ loading, error, signoutCallback, location }) {
       return <div>Candidates</div>;
     }
 
-    return <Map />;
+    return <Map cdWithMap={cdWithMap} />;
   };
 
   const classes = useStyles();
@@ -107,6 +107,7 @@ Dashboard.propTypes = {
   error: PropTypes.bool,
   signoutCallback: PropTypes.func,
   location: PropTypes.string,
+  cdWithMap: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 export default Dashboard;

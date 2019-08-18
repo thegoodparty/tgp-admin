@@ -22,18 +22,26 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadUser, resetUser } from '../App/actions';
 import { cleanCookies } from '../../helpers/cookieHelper';
+import { loadCdWithMapAction } from './actions';
 
-export function DashboardPage({ dispatch, signoutCallback, location }) {
+export function DashboardPage({
+  dispatch,
+  signoutCallback,
+  dashboardPage,
+  location,
+}) {
   useInjectReducer({ key: 'dashboardPage', reducer });
   useInjectSaga({ key: 'dashboardPage', saga });
 
   useEffect(() => {
     dispatch(loadUser());
+    dispatch(loadCdWithMapAction());
   }, []);
 
   const childProps = {
     signoutCallback,
     location,
+    cdWithMap: dashboardPage.cdWithMap,
   };
 
   return (
@@ -51,6 +59,7 @@ DashboardPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   signoutCallback: PropTypes.func.isRequired,
   location: PropTypes.string,
+  dashboardPage: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

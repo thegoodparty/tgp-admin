@@ -15,8 +15,8 @@ import {
   LOAD_CD_W_USERS_ACTION_SUCCESS,
   LOAD_CD_W_USERS_ACTION_ERROR,
   LOAD_SENATE_W_USERS_ACTION,
-  LOAD_SENATE_W_USERS_ACTION_SUCCESS,
   LOAD_SENATE_W_USERS_ACTION_ERROR,
+  LOAD_SENATE_W_USERS_ACTION_SUCCESS,
 } from './constants';
 
 export function loadAllUsersAction() {
@@ -56,6 +56,26 @@ export function loadThresholdsSuccess(cdThresholds, senateThresholds) {
 export function loadThresholdsError(error) {
   return {
     type: LOAD_THRESHOLDS_ACTION_ERROR,
+    error,
+  };
+}
+
+export function loadCdWithUsersAction() {
+  return {
+    type: LOAD_CD_W_USERS_ACTION,
+  };
+}
+
+export function loadCdWithUsersActionSuccess(cdWithUsers) {
+  return {
+    type: LOAD_CD_W_USERS_ACTION_SUCCESS,
+    cdWithUsers,
+  };
+}
+
+export function loadCdWithUsersActionError(error) {
+  return {
+    type: LOAD_CD_W_USERS_ACTION_ERROR,
     error,
   };
 }

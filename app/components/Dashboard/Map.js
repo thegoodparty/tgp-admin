@@ -13,13 +13,28 @@ const MapWrapper = styled.div`
 `;
 
 // eslint-disable-line no-undef
-function Map() {
+function Map({ cdWithMap }) {
   let map;
   let heatmap;
+  let stateCd = {};
 
   useEffect(() => {
     initMap();
   });
+
+  // change the cd array to a hash with the state as a key
+  const stateHash = () => {
+    let key;
+    cdWithMap.map(cd => {
+      key = `${cd.state.name}-${cd.code}`;
+      stateCd[key] = cd;
+    });
+    console.log(stateCd);
+  };
+
+  if (cdWithMap) {
+    stateHash();
+  }
 
   const initMap = () => {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -32,7 +47,7 @@ function Map() {
     //   map: map,
     // });
     map.data.loadGeoJson(
-      'http://admin-dev.thegoodparty.org.s3-website-us-west-2.amazonaws.com/gz_2010_us_500_11_5m.json',
+      'http://admin-dev.thegoodparty.org.s3-website-us-west-2.amazonaws.com/gz_2010_us_with_states.json',
     );
     const infowindow = new google.maps.InfoWindow();
     map.data.addListener('click', function(event) {
@@ -52,17 +67,30 @@ function Map() {
 
     map.data.setStyle(feature => {
       const code = feature.getProperty('GEO_ID');
+      const state = feature.getProperty('STATE');
+      const cd = feature.getProperty('CD');
+      const key = `${state}-${cd}`;
       const zoneCodes = {};
-      if (!zoneCodes[code]) {
-        const randomColor = '#000000'.replace(/0/g, () =>
-          (~~(Math.random() * 16)).toString(16),
-        );
-        zoneCodes[code] = randomColor;
+      if (!zoneCodes[code] && stateCd[key]) {
+        // const randomColor = '#000000'.replace(/0/g, () =>
+        //   (~~(Math.random() * 16)).toString(16),
+        // );
+        zoneCodes[code] = '#FF0000';
       }
+      const { userCount, writeInThreshold } = stateCd[key];
+      let fillOpacity = userCount === 0 ? writeInThreshold / userCount : 0;
+      if (userCount > 0 && fillOpacity < 0.1) {
+        fillOpacity = 0.1;
+      }
+
+      if (fillOpacity > 1) {
+        fillOpacity = 1;
+      }
+
       return {
         fillColor: zoneCodes[code],
         strokeWeight: 2,
-        fillOpacity: 0.3,
+        fillOpacity: fillOpacity.toFixed(2),
       };
     });
   };
@@ -579,6 +607,8 @@ function Map() {
   );
 }
 
-Map.propTypes = {};
+Map.propTypes = {
+  cdWithMap: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+};
 
 export default Map;
