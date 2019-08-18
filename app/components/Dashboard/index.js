@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     maxWidth: 'auto',
-
   },
   loadingModal: {
     position: 'fixed',
@@ -91,6 +90,7 @@ function Dashboard({ loading, error, signoutCallback, location }) {
         open={open}
         handleDrawerClose={handleDrawerClose}
         signoutCallback={signoutCallback}
+        location={location}
       />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

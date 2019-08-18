@@ -18,9 +18,20 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectPledgesPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { loadAllUsersAction } from './actions';
+import {
+  loadAllUsersAction,
+  loadCdWithUsersAction,
+  loadSenateWithUsersAction,
+  loadThresholdsAction,
+} from './actions';
 
-export function PledgesPage({ dispatch, pledgesPage }) {
+export function PledgesPage({
+  dispatch,
+  pledgesPage,
+  loadThresholdsCallback,
+  loadCdWithUsersCallback,
+  loadSenateWithUsersCallback,
+}) {
   useInjectReducer({ key: 'pledgesPage', reducer });
   useInjectSaga({ key: 'pledgesPage', saga });
 
@@ -30,6 +41,9 @@ export function PledgesPage({ dispatch, pledgesPage }) {
 
   const childProps = {
     pledgesPage,
+    loadThresholdsCallback,
+    loadCdWithUsersCallback,
+    loadSenateWithUsersCallback,
   };
   return (
     <div>
@@ -45,6 +59,9 @@ export function PledgesPage({ dispatch, pledgesPage }) {
 PledgesPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   pledgesPage: PropTypes.object,
+  loadThresholdsCallback: PropTypes.func,
+  loadCdWithUsersCallback: PropTypes.func,
+  loadSenateWithUsersCallback: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -54,6 +71,15 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    loadThresholdsCallback: () => {
+      dispatch(loadThresholdsAction());
+    },
+    loadCdWithUsersCallback: () => {
+      dispatch(loadCdWithUsersAction());
+    },
+    loadSenateWithUsersCallback: () => {
+      dispatch(loadSenateWithUsersAction());
+    },
   };
 }
 

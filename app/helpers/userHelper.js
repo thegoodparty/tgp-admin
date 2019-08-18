@@ -1,4 +1,7 @@
-import { getCookie } from './cookieHelper';
+import { push } from 'connected-react-router';
+import { put } from 'redux-saga/effects';
+import { cleanCookies, getCookie } from './cookieHelper';
+import { resetUser } from '../containers/App/actions';
 
 export const ADMIN_ROLE = 30;
 let cachedToken;
@@ -24,3 +27,9 @@ export const getTokenFromState = state => {
   }
   return '';
 };
+
+export function* logoutUser() {
+  cleanCookies();
+  yield put(resetUser());
+  yield put(push('/'));
+}

@@ -17,12 +17,23 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SignoutIcon from '@material-ui/icons/Cancel';
-// import SignoutIcon from 'react-icons/lib/fa/sign-out';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { drawerWidth } from 'config/constantsConfig';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import PledgeIcon from '@material-ui/icons/HowToVote';
+import CandidatesIcon from '@material-ui/icons/AccountBalance';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import { Link } from 'react-router-dom';
 
-import { mainListItems } from 'components/LeftPanel/listItems';
-
+const RcLink = styled(Link)`
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+  &.red {
+    color: red;
+  }
+`;
 const useStyles = makeStyles(theme => ({
   toolbarIcon: {
     display: 'flex',
@@ -58,8 +69,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function LeftPanel({ open, handleDrawerClose, signoutCallback }) {
+function LeftPanel({ open, handleDrawerClose, signoutCallback, location }) {
   const classes = useStyles();
+  console.log(location)
   return (
     <Drawer
       variant="permanent"
@@ -74,7 +86,43 @@ function LeftPanel({ open, handleDrawerClose, signoutCallback }) {
         </IconButton>
       </div>
       <Divider />
-      <List>{mainListItems}</List>
+      <List>
+        <ListItem button selected={location === '/dashboard/dashboard'}>
+          <RcLink to="/dashboard">
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </RcLink>
+        </ListItem>
+
+        <ListItem button selected={location === '/dashboard/pledges'}>
+          <RcLink to="/dashboard/pledges">
+            <ListItemIcon>
+              <PledgeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Pledges" />
+          </RcLink>
+        </ListItem>
+
+        <ListItem button selected={location === '/dashboard/candidates'}>
+          <RcLink to="/dashboard/candidates">
+            <ListItemIcon>
+              <CandidatesIcon />
+            </ListItemIcon>
+            <ListItemText primary="Candidates" />
+          </RcLink>
+        </ListItem>
+
+        <ListItem button selected={location === '/dashboard/reports'}>
+          <RcLink to="/dashboard/reports">
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Reports" />
+          </RcLink>
+        </ListItem>
+      </List>
       <div className={classes.bottomLink}>
         <Divider />
         <ListItem button>
@@ -92,6 +140,7 @@ LeftPanel.propTypes = {
   open: PropTypes.bool,
   handleDrawerClose: PropTypes.func,
   signoutCallback: PropTypes.func,
+  location: PropTypes.string,
 };
 
 export default memo(LeftPanel);

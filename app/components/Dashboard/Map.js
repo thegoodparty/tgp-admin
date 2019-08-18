@@ -41,7 +41,6 @@ function Map() {
       }`;
       infowindow.setContent("<div style='width:150px;'>" + myHTML + '</div>');
       // position the infowindow on the marker
-      console.log('herer', event.latLng.lat(), event.latLng.lng());
       infowindow.setPosition({
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
@@ -53,7 +52,6 @@ function Map() {
 
     map.data.setStyle(feature => {
       const code = feature.getProperty('GEO_ID');
-      console.log('code', code);
       const zoneCodes = {};
       if (!zoneCodes[code]) {
         const randomColor = '#000000'.replace(/0/g, () =>

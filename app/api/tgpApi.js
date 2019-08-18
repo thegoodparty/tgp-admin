@@ -18,5 +18,17 @@ const api = {
     url: base + 'admin/all-users',
     method: 'GET',
   },
+  thresholds: {
+    url: base + 'admin/thresholds',
+    method: 'GET',
+  },
+  cdWithUsers: {
+    url: base + 'admin/cd-with-count',
+    method: 'GET',
+  },
+  senateWithUsers: {
+    url: base + 'admin/senate-with-count',
+    method: 'GET',
+  },
 };
 export default api;
