@@ -1,7 +1,7 @@
 import ENV from './ENV';
 let base = 'http://localhost:1337/api/v1/';
 if (ENV === 'dev') {
-  base = 'http://tgp-api-dev.us-west-2.elasticbeanstalk.com/api/v1/';
+  base = 'https://api-dev.thegoodparty.org/api/v1/';
 }
 
 const api = {
@@ -28,6 +28,14 @@ const api = {
   },
   senateWithUsers: {
     url: base + 'admin/senate-with-count',
+    method: 'GET',
+  },
+  cdWeeklyTrend: {
+    url: base + 'admin/cd-weekly-trend',
+    method: 'GET',
+  },
+  senateWeeklyTrend: {
+    url: base + 'admin/senate-weekly-trend',
     method: 'GET',
   },
 };

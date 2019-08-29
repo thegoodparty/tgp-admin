@@ -22,7 +22,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { loadUser, resetUser } from '../App/actions';
 import { cleanCookies } from '../../helpers/cookieHelper';
-import { loadCdWithMapAction } from './actions';
+import { loadCdWeeklyTrendAction, loadCdWithMapAction } from './actions';
 
 export function DashboardPage({
   dispatch,
@@ -36,12 +36,15 @@ export function DashboardPage({
   useEffect(() => {
     dispatch(loadUser());
     dispatch(loadCdWithMapAction());
+    dispatch(loadCdWeeklyTrendAction());
   }, []);
 
   const childProps = {
     signoutCallback,
     location,
     cdWithMap: dashboardPage.cdWithMap,
+    cdTrend: dashboardPage.cdTrend,
+    senateTrend: dashboardPage.senateTrend,
   };
 
   return (

@@ -10,12 +10,15 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 import PledgesPage from 'containers/PledgesPage/Loadable';
 
 import Header from '../Header';
 import LeftPanel from '../LeftPanel';
 import Map from './Map';
+import WeeklyTrendChart from './WeeklyTrendChart';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,9 +50,23 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
 }));
 
-function Dashboard({ loading, error, signoutCallback, cdWithMap, location }) {
+function Dashboard({
+  loading,
+  error,
+  signoutCallback,
+  cdWithMap,
+  location,
+  cdTrend,
+  senateTrend,
+}) {
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -69,7 +86,32 @@ function Dashboard({ loading, error, signoutCallback, cdWithMap, location }) {
       return <div>Candidates</div>;
     }
 
-    return <Map cdWithMap={cdWithMap} />;
+    return (
+      <div>
+        <Grid container spacing={3}>
+          {/* Chart */}
+          <Grid item xs={12} md={6}>
+            <Paper className={classes.paper}>
+              <WeeklyTrendChart
+                chartData={cdTrend}
+                title="Congressional District Trend (last 7 days)"
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Paper className={classes.paper}>
+              <WeeklyTrendChart
+                chartData={senateTrend}
+                title="Senate District Trend (last 7 days)"
+              />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Map cdWithMap={cdWithMap} />
+          </Grid>
+        </Grid>
+      </div>
+    );
   };
 
   const classes = useStyles();
@@ -108,6 +150,8 @@ Dashboard.propTypes = {
   signoutCallback: PropTypes.func,
   location: PropTypes.string,
   cdWithMap: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  cdTrend: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  senateTrend: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 export default Dashboard;

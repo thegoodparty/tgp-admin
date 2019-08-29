@@ -76,22 +76,23 @@ function Map({ cdWithMap }) {
         //   (~~(Math.random() * 16)).toString(16),
         // );
         zoneCodes[code] = '#FF0000';
-      }
-      const { userCount, writeInThreshold } = stateCd[key];
-      let fillOpacity = userCount === 0 ? writeInThreshold / userCount : 0;
-      if (userCount > 0 && fillOpacity < 0.1) {
-        fillOpacity = 0.1;
-      }
 
-      if (fillOpacity > 1) {
-        fillOpacity = 1;
-      }
+        const { userCount, writeInThreshold } = stateCd[key];
+        let fillOpacity = userCount === 0 ? writeInThreshold / userCount : 0;
+        if (userCount > 0 && fillOpacity < 0.1) {
+          fillOpacity = 0.1;
+        }
 
-      return {
-        fillColor: zoneCodes[code],
-        strokeWeight: 2,
-        fillOpacity: fillOpacity.toFixed(2),
-      };
+        if (fillOpacity > 1) {
+          fillOpacity = 1;
+        }
+
+        return {
+          fillColor: zoneCodes[code],
+          strokeWeight: 2,
+          fillOpacity: fillOpacity.toFixed(2),
+        };
+      }
     });
   };
 
