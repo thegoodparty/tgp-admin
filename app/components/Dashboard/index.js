@@ -86,6 +86,9 @@ function Dashboard({
     if (location === '/dashboard/candidates') {
       return <CandidatesPage />;
     }
+    if (location === '/dashboard/candidates/new') {
+      return <CandidatesPage newModal />;
+    }
 
     if (location.startsWith('/dashboard/candidates/view/')) {
       const candidateIndex = parseInt(
@@ -93,9 +96,6 @@ function Dashboard({
         10,
       );
       return <CandidatesPage viewModal candidateIndex={candidateIndex} />;
-    }
-    if (location === '/dashboard/dashboard') {
-      return <CandidatesPage />;
     }
 
     return (

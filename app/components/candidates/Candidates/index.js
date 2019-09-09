@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -16,8 +16,10 @@ import DeleteIcon from '@material-ui/icons/DeleteTwoTone';
 import EditIcon from '@material-ui/icons/EditTwoTone';
 import ViewIcon from '@material-ui/icons/VisibilityTwoTone';
 import Fab from '@material-ui/core/Fab';
+
 import Dialog from 'components/Dialog/Loadable';
-import CandidateDetail from 'components/CandidateDetail/Loadable';
+import CandidateDetail from 'components/candidates/CandidateDetail/Loadable';
+import NewCandidate from 'components/candidates/NewCandidate/Loadable';
 
 import MdPaper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -121,8 +123,10 @@ const columns = [
 function Candidates({
   candidatesState,
   viewModal,
+  newModal,
   candidateIndex,
   closeModalCallback,
+  newCandidateCallback
 }) {
   const tableData = [];
   const { loading, error, candidates } = candidatesState;
@@ -143,9 +147,16 @@ function Candidates({
         <div>
           <H2>Candidates</H2>
           <AddNew>
-            <Fab color="secondary" aria-label="add" size="medium">
-              <AddIcon />
-            </Fab>
+            <Link to="/dashboard/candidates/new">
+              <Fab
+                color="secondary"
+                aria-label="add"
+                size="medium"
+                style={{ backgroundColor: 'green' }}
+              >
+                <AddIcon />
+              </Fab>
+            </Link>
           </AddNew>
           <ReactTable
             className="-striped -highlight"
@@ -158,6 +169,11 @@ function Candidates({
               <CandidateDetail candidate={candidates[candidateIndex]} />
             </Dialog>
           )}
+          {newModal && (
+            <Dialog fullScreen open={newModal} onClose={closeModalCallback}>
+              <NewCandidate newCandidateCallback={newCandidateCallback} />
+            </Dialog>
+          )}
         </div>
       )}
     </Paper>
@@ -165,10 +181,12 @@ function Candidates({
 }
 
 Candidates.propTypes = {
+  newModal: PropTypes.bool,
   viewModal: PropTypes.bool,
   candidateIndex: PropTypes.number,
   closeModalCallback: PropTypes.func,
   candidatesState: PropTypes.object,
+  newCandidateCallback: PropTypes.func,
 };
 
 export default memo(Candidates);

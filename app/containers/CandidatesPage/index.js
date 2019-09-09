@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import Candidates from 'components/Candidates';
+import Candidates from 'components/candidates/Candidates';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -32,8 +32,7 @@ const candState = {
       phone: '(310) 971-2789',
       district: 'AZ-09',
       state: 'AZ',
-      profileImage:
-        'https://i.pravatar.cc/600',
+      profileImage: 'https://i.pravatar.cc/600',
       facebookUrl: 'https://www.facebook.com/thegoodpartyorg/',
       twitterUrl: 'https://twitter.com/thegoodpartyorg',
       instagramUrl: 'https://www.instagram.com/thegoodpartyorg/',
@@ -53,16 +52,20 @@ const candState = {
 
 export function CandidatesPage({
   viewModal,
+  newModal,
   candidateIndex,
   closeModalCallback,
+  newCandidateCallback,
 }) {
   useInjectReducer({ key: 'candidatesPage', reducer });
   useInjectSaga({ key: 'candidatesPage', saga });
 
   const childProps = {
     viewModal,
+    newModal,
     candidateIndex,
     closeModalCallback,
+    newCandidateCallback,
     candidatesState: candState,
   };
 
@@ -80,8 +83,10 @@ export function CandidatesPage({
 CandidatesPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
   viewModal: PropTypes.bool,
+  newModal: PropTypes.bool,
   candidateIndex: PropTypes.number,
   closeModalCallback: PropTypes.func,
+  newCandidateCallback: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -93,6 +98,9 @@ function mapDispatchToProps(dispatch) {
     dispatch,
     closeModalCallback: () => {
       dispatch(push('/dashboard/candidates'));
+    },
+    newCandidateCallback: candidate => {
+      console.log(candidate);
     },
   };
 }

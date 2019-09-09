@@ -35,24 +35,6 @@ const A = styled.a`
   color: ${C.colors.blue};
 `;
 
-/*
-{
-      id: '0',
-      firstName: 'Tomer',
-      lastName: 'Almog',
-      email: 'abc@rfd.com',
-      phone: '(310) 971-2789',
-      district: 'AZ-09',
-      state: 'AZ',
-      profileImage: 'https://i.pravatar.cc/300',
-      facebookUrl: 'https://www.facebook.com/marina.berandi',
-      twitterUrl: 'https://twitter.com/MarinaBerandi',
-      instagramUrl: 'https://www.instagram.com/marinaberandi/',
-      about:
-        'Gavin Christopher Newsom is an American politician and businessman who is the 40th governor of California, serving since January 2019. A member of the Democratic Party, he previously served as the 49th lieutenant governor of California from 2011 to 2019 and as the 42nd mayor of San Francisco from 2004 to 2011',
-    },
- */
-
 function CandidateDetail({ candidate }) {
   return (
     <>
