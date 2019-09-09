@@ -48,7 +48,7 @@ export function PledgesPage({
   return (
     <div>
       <Helmet>
-        <title>TGP Pledges</title>
+        <title>TGP | Pledges</title>
         <meta name="description" content="Description of PledgesPage" />
       </Helmet>
       <Pledges {...childProps} />

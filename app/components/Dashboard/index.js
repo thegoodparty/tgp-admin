@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
 import PledgesPage from 'containers/PledgesPage/Loadable';
+import CandidatesPage from 'containers/CandidatesPage/Loadable';
 
 import Header from '../Header';
 import LeftPanel from '../LeftPanel';
@@ -83,7 +84,18 @@ function Dashboard({
       return <PledgesPage />;
     }
     if (location === '/dashboard/candidates') {
-      return <div>Candidates</div>;
+      return <CandidatesPage />;
+    }
+
+    if (location.startsWith('/dashboard/candidates/view/')) {
+      const candidateIndex = parseInt(
+        location.replace('/dashboard/candidates/view/', ''),
+        10,
+      );
+      return <CandidatesPage viewModal candidateIndex={candidateIndex} />;
+    }
+    if (location === '/dashboard/dashboard') {
+      return <CandidatesPage />;
     }
 
     return (

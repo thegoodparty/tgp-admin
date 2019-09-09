@@ -76,11 +76,11 @@ function Header({ open, handleDrawerOpen }) {
         >
           The Good Party Admin Dashboard
         </Typography>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        {/*<IconButton color="inherit">*/}
+          {/*<Badge badgeContent={4} color="secondary">*/}
+            {/*<NotificationsIcon />*/}
+          {/*</Badge>*/}
+        {/*</IconButton>*/}
       </Toolbar>
     </AppBar>
   );

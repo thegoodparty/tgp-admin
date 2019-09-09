@@ -6,8 +6,6 @@
 
 import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import MdPaper from '@material-ui/core/Paper';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 

@@ -41,7 +41,7 @@ export function LoginPage({
   return (
     <div>
       <Helmet>
-        <title>LoginPage</title>
+        <title>TGP | LoginPage</title>
         <meta name="description" content="Description of LoginPage" />
       </Helmet>
       <Login {...childProps} />
