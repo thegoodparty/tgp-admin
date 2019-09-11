@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -19,6 +19,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectCandidatesPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { loadAllCandidatesAction } from './actions';
 
 const candState = {
   loading: false,
@@ -51,14 +52,20 @@ const candState = {
 };
 
 export function CandidatesPage({
+  dispatch,
   viewModal,
   newModal,
   candidateIndex,
   closeModalCallback,
   newCandidateCallback,
+  candidatesState,
 }) {
   useInjectReducer({ key: 'candidatesPage', reducer });
   useInjectSaga({ key: 'candidatesPage', saga });
+
+  useEffect(() => {
+    dispatch(loadAllCandidatesAction());
+  }, []);
 
   const childProps = {
     viewModal,
@@ -66,8 +73,10 @@ export function CandidatesPage({
     candidateIndex,
     closeModalCallback,
     newCandidateCallback,
-    candidatesState: candState,
+    candidatesState,
   };
+
+  console.log(candidatesState);
 
   return (
     <div>
@@ -87,10 +96,11 @@ CandidatesPage.propTypes = {
   candidateIndex: PropTypes.number,
   closeModalCallback: PropTypes.func,
   newCandidateCallback: PropTypes.func,
+  candidatesState: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  candidatesPage: makeSelectCandidatesPage(),
+  candidatesState: makeSelectCandidatesPage(),
 });
 
 function mapDispatchToProps(dispatch) {

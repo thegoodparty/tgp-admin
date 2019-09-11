@@ -38,5 +38,9 @@ const api = {
     url: base + 'admin/senate-weekly-trend',
     method: 'GET',
   },
+  loadAllCandidates: {
+    url: base + 'admin/candidates',
+    method: 'GET',
+  },
 };
 export default api;

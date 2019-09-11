@@ -100,17 +100,17 @@ const columns = [
     sortable: false,
     Cell: row => (
       <Icons>
-        <Link to={`/dashboard/candidates/view/${row.original.id}`}>
+        <Link to={`/dashboard/candidates/view/${row.original.index}`}>
           <Fab aria-label="view" size="small">
             <ViewIcon />
           </Fab>
         </Link>
-        <Link to={`/dashboard/candidates/edit/${row.original.id}`}>
+        <Link to={`/dashboard/candidates/edit/${row.original.index}`}>
           <Fab color="primary" aria-label="Edit" size="small">
             <EditIcon />
           </Fab>
         </Link>
-        <Link to={`/dashboard/candidates/cancel/${row.original.id}`}>
+        <Link to={`/dashboard/candidates/cancel/${row.original.index}`}>
           <Fab color="secondary" aria-label="Delete" size="small">
             <DeleteIcon />
           </Fab>
@@ -126,14 +126,18 @@ function Candidates({
   newModal,
   candidateIndex,
   closeModalCallback,
-  newCandidateCallback
+  newCandidateCallback,
 }) {
   const tableData = [];
   const { loading, error, candidates } = candidatesState;
   if (candidates) {
     // eslint-disable-next-line array-callback-return
-    candidates.map(candidate => {
-      tableData.push(candidate);
+    candidates.map((candidate, index) => {
+      tableData.push({
+        ...candidate,
+        index,
+        state: candidate.state ? candidate.state.name : '',
+      });
     });
   }
 

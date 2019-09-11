@@ -89,20 +89,24 @@ function CandidateDetail({ candidate }) {
               </Typography>
               <br />
               <br />
-              <Typography variant="h4" gutterBottom>
-                Cares About
-              </Typography>
-              <ul>
-                {candidate.caresAbout.map((care, index) => (
-                  <Typography
-                    variant="body1"
-                    gutterBottom
-                    key={`care-${index}`}
-                  >
-                    <li>{care}</li>
+              {candidate.caresAbout && (
+                <>
+                  <Typography variant="h4" gutterBottom>
+                    Cares About
                   </Typography>
-                ))}
-              </ul>
+                  <ul>
+                    {candidate.caresAbout.map((care, index) => (
+                      <Typography
+                        variant="body1"
+                        gutterBottom
+                        key={`care-${index}`}
+                      >
+                        <li>{care}</li>
+                      </Typography>
+                    ))}
+                  </ul>
+                </>
+              )}
             </Wrapper>
           </Grid>
         </Grid>

@@ -32,7 +32,7 @@ function NewCandidate({ newCandidateCallback }) {
     lastName: '',
     phone: '',
     email: '',
-    state: '',
+    shortState: '',
     district: '',
     about: '',
     facebookUrl: '',
@@ -52,17 +52,26 @@ function NewCandidate({ newCandidateCallback }) {
   };
 
   const handleSave = () => {
-    newCandidateCallback({ ...values, image });
+    // add long state
+    let longState = '';
+    for (let i = 0; i < states.length; i++) {
+      if (states[i].value === values.shortState) {
+        longState = states[i].label;
+        break;
+      }
+    }
+
+    newCandidateCallback({ ...values, image, longState });
   };
 
   const canSave = () => {
-    const { firstName, lastName, phone, email, state, about } = values;
+    const { firstName, lastName, phone, email, shortState, about } = values;
     return (
       firstName !== '' &&
       lastName !== '' &&
       phone !== '' &&
       email !== '' &&
-      state !== '' &&
+      shortState !== '' &&
       about !== '' &&
       typeof image !== 'undefined'
     );
@@ -149,8 +158,8 @@ function NewCandidate({ newCandidateCallback }) {
               required
               fullWidth
               label="State"
-              value={values.state}
-              onChange={handleChange('state')}
+              value={values.shortState}
+              onChange={handleChange('shortState')}
               margin="normal"
               variant="outlined"
               SelectProps={{
