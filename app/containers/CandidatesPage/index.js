@@ -19,7 +19,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectCandidatesPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { loadAllCandidatesAction } from './actions';
+import { addCandidateAction, loadAllCandidatesAction } from './actions';
 
 const candState = {
   loading: false,
@@ -111,6 +111,7 @@ function mapDispatchToProps(dispatch) {
     },
     newCandidateCallback: candidate => {
       console.log(candidate);
+      dispatch(addCandidateAction(candidate));
     },
   };
 }

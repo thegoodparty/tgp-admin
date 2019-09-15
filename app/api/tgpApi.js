@@ -42,5 +42,9 @@ const api = {
     url: base + 'admin/candidates',
     method: 'GET',
   },
+  addCandidate: {
+    url: base + 'admin/candidate',
+    method: 'POST',
+  },
 };
 export default api;
